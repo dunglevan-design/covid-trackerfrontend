@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "better-react-mathjax": "^1.0.3",
     "chart.js": "^3.6.0",
     "leaflet": "^1.7.1",
     "numeral": "^2.0.6",
@@ -19,8 +20,7 @@
     "react-leaflet": "^2.8.0",
     "react-scripts": "4.0.3",
     "sir.js": "^1.0.3",
-    "web-vitals": "^1.1.2",
-    "better-react-mathjax": "^1.0.3"
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -45,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "faker": "^5.5.3"
   }
 }

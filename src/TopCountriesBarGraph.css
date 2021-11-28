@@ -1,0 +1,11 @@
+.bar__graph {
+    max-width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.container{
+    flex-wrap: wrap;
+    justify-content: space-around;
+} 

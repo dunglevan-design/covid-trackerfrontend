@@ -1,3 +1,17 @@
 .SIR__Graph {
     height: 200px;
 }
+
+.container {
+    display: flex;
+}
+
+.SIR__controls {
+    width: 250px;
+    display: grid;
+    grid-template-columns: 1fr 1fr
+}
+
+.formula{
+    margin: 10px;
+}

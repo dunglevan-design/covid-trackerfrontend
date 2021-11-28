@@ -55,10 +55,6 @@ const options = {
       ticks: {
         // Include a dollar sign in the ticks
         color: "#25E35F",
-
-        callback: function (value, index, values) {
-          return numeral(value).format("0a");
-        },
       },
     },
   },

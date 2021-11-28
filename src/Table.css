@@ -1,8 +1,9 @@
 .table__container {
     margin-top: 20px;
+    margin-bottom: 20px;
     overflow: hidden;
     overflow-y: scroll;
-    height: 400px;    
+    height: 250px;    
 }
 
 .table {

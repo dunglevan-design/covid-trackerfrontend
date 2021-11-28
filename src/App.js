@@ -16,6 +16,7 @@ import CaseGraph from "./CaseGraph";
 import Map from "./Map";
 import numeral from "numeral";
 import SIR from "./SIR";
+import TopCountriesBarGraph from "./TopCountriesBarGraph";
 
 function App() {
   const [Countries, setCountries] = useState([]);
@@ -168,21 +169,21 @@ function App() {
         </div>
         <h3>Live cases by country</h3>
         <Table countries={tableData} />
-      </div>
-      <Card className="app__right">
-        <CardContent>
-          <h3>Worldwide new cases</h3>
-          <CaseGraph casesType={casesType} />
-          <h3>SIR model for {Country}</h3>
-          <SIR Country = {Country} population = {CountryInfo.population}></SIR>
-         
           <Map
             center={mapCenter}
             zoom={mapZoom}
             countries={mapCountries}
             casesType={casesType}
           />
-
+      </div>
+      <Card className="app__right">
+        <CardContent>
+          <h3>Worldwide new cases</h3>
+          <CaseGraph casesType={casesType} />
+          <h3>SIR model</h3>
+          <SIR></SIR>
+          <h3>Top countries</h3>
+          <TopCountriesBarGraph countries = {tableData.slice(0,5)}></TopCountriesBarGraph>
         </CardContent>
       </Card>
     </div>
