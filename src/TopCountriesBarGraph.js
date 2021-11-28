@@ -26,8 +26,8 @@ export const options = {
   plugins: {
     legend: {
       display: true,
-      title: {
-        fontColor: "#fff",
+      labels: {
+        color: "#fff",
       },
     },
   },
