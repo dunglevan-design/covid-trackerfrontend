@@ -27,9 +27,8 @@ export const options = {
     legend: {
       display: true,
       title: {
-          fontColor: "#fff",
+        fontColor: "#fff",
       },
-    
     },
   },
   scales: {
@@ -58,7 +57,7 @@ const TopCountriesBarGraph = ({ countries }) => {
     datasets: [
       {
         label: "Critical cases",
-        data: labels.map((label, index) => countries[index].critical),
+        data: labels.map((label, index) => countries[index]?.critical),
         backgroundColor: "#CC1034",
         borderColor: "#CC1034",
       },
@@ -69,7 +68,7 @@ const TopCountriesBarGraph = ({ countries }) => {
     datasets: [
       {
         label: "Deaths",
-        data: labels.map((label, index) => countries[index].deaths),
+        data: labels.map((label, index) => countries[index]?.deaths),
         backgroundColor: "#CC1034",
         borderColor: "#CC1034",
       },
@@ -77,12 +76,16 @@ const TopCountriesBarGraph = ({ countries }) => {
   };
   return (
     <div className="container">
-      <div className="bar__graph">
-        <Bar options={options} data={data} />
-      </div>
-      <div className="bar__graph">
-        <Bar options={options} data={deathsdata} />
-      </div>
+      {!!data && (
+        <div className="bar__graph">
+          <Bar options={options} data={data} />
+        </div>
+      )}
+      {!!deathsdata && (
+        <div className="bar__graph">
+          <Bar options={options} data={deathsdata} />
+        </div>
+      )}
     </div>
   );
 };
