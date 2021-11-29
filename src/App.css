@@ -66,8 +66,13 @@ body {
   margin-top: 1rem;
 }
 
+.app__right h3:not(:first-child) {
+  margin-top: 20px;
+}
+
 .app__right h3 {
   color: #25E35F;
+  margin-bottom: 12px;
 }
 
 @media (max-width: 990px) {
