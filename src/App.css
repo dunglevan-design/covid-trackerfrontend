@@ -39,6 +39,7 @@ body {
 .app__stats {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 16px;
 }
 
 .app__left {
@@ -47,6 +48,11 @@ body {
 
 .app__right {
   flex: 0.5;
+}
+
+
+.table__header {
+  color: #25e358;
 }
 
 .app__information > h3 {

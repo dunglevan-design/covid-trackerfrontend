@@ -37,6 +37,12 @@ function App() {
   });
 
   useEffect(() => {
+    const loadingscreen = document.querySelector(".loading__screen");
+    loadingscreen.classList.add("fade-out");
+
+  }, [])
+
+  useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
       .then((response) => response.json())
       .then((data) => {
@@ -167,7 +173,7 @@ function App() {
             total={numeral(CountryInfo.deaths).format("0,0")}
           />
         </div>
-        <h3>Live cases by country</h3>
+        <h3 className = "table__header">Live cases by country</h3>
         <Table countries={tableData} />
           <Map
             center={mapCenter}
