@@ -15,3 +15,12 @@
 .formula{
     margin: 10px;
 }
+
+.loading__overlay {
+    height: 200px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

@@ -29,7 +29,7 @@ function App() {
   });
   const [mapZoom, setMapZoom] = useState(3);
   const [mapCountries, setmapCountries] = useState([]);
-  const [casesType, setCasesType] = useState("recovered");
+  const [casesType, setCasesType] = useState("cases");
   const [exactData, setExactData] = useState({
     cases: 0,
     deaths: 0,

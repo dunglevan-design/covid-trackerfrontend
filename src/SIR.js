@@ -4,6 +4,7 @@ import { Box, Button, Slider, Typography } from "@mui/material";
 import SIRGraph from "./SIRGraph";
 import { baseurl } from "./URL";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const SIR = () => {
   const [alpha, setAlpha] = useState(0.0001);
@@ -16,6 +17,8 @@ const SIR = () => {
   const [Gamma, setGamma] = useState(0.05);
   const [DateList, setDateList] = useState([]);
   const [solution, setsolution] = useState({});
+  const firstload = useRef(true);
+  const [loading, setLoading] = useState(true);
 
   const solveSIR = async () => {
     const url = `${baseurl}/SIRsolver/solveode`;
@@ -49,12 +52,16 @@ const SIR = () => {
   useEffect(() => {
     console.log("Parameters chaanged, solving again ... ");
     solveSIR().then(({ S, I, R }) => {
+      firstload.current = false;
       setsolution({
         S: S,
         I: I,
         R: R,
       });
     });
+    if (firstload) {
+      setLoading(false);
+    }
   }, [S0, R0, I0, Beta, Gamma]);
 
   return (
@@ -119,19 +126,34 @@ const SIR = () => {
         </div>
         <div className="formula__container">
           <MathJaxContext>
-            <MathJax className = "formula">
+            <MathJax className="formula">
               {"\\(\\frac{dS}{dt} = -{\\beta}{\\cdot}S{\\cdot}I\\)"}
             </MathJax>
-            <MathJax className = "formula">
+            <MathJax className="formula">
               {
                 "\\(\\frac{dI}{dt} = {\\beta}{\\cdot}S{\\cdot}I - {\\gamma}{\\cdot}I\\)"
               }
             </MathJax>
-            <MathJax className = "formula">{"\\(\\frac{dR}{dt} = {\\gamma}{\\cdot}I\\)"}</MathJax>
+            <MathJax className="formula">
+              {"\\(\\frac{dR}{dt} = {\\gamma}{\\cdot}I\\)"}
+            </MathJax>
           </MathJaxContext>
         </div>
       </div>
-      <SIRGraph DateList={DateList} {...solution}></SIRGraph>
+      {loading ? (
+        <Loading />
+      ) : (
+        <SIRGraph DateList={DateList} {...solution}></SIRGraph>
+      )}
+    </div>
+  );
+};
+
+const Loading = () => {
+  return (
+    <div className="loading__overlay">
+      <p>Sorry, backend host on Heroku Dyno ...</p>
+      <CircularProgress color="secondary" />
     </div>
   );
 };
