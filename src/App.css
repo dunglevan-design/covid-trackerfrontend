@@ -43,11 +43,11 @@ body {
 }
 
 .app__left {
-  flex: 0.4;
+  flex: 0.45;
 }
 
 .app__right {
-  flex: 0.5;
+  flex: 0.45;
 }
 
 

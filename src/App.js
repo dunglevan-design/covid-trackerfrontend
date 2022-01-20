@@ -17,6 +17,35 @@ import Map from "./Map";
 import numeral from "numeral";
 import SIR from "./SIR";
 import TopCountriesBarGraph from "./TopCountriesBarGraph";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  initial: {
+    y: 20,
+    opacity: 0,
+  },
+  animate: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      delay: 0.1,
+      duration: 0.5,
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const itemVariants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 function App() {
   const [Countries, setCountries] = useState([]);
@@ -39,8 +68,7 @@ function App() {
   useEffect(() => {
     const loadingscreen = document.querySelector(".loading__screen");
     loadingscreen.classList.add("fade-out");
-
-  }, [])
+  }, []);
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -117,83 +145,111 @@ function App() {
 
   return (
     <div className="app">
-      <div className="app__left">
-        <div className="app__header">
-          <h1>COVID-19 TRACKER</h1>
-          <FormControl className="app__dropdown">
-            <Select
-              variant="outlined"
-              value={Country}
-              onChange={onCountryChange}
-              size="small"
-            >
-              <MenuItem value="worldwide">Worldwide</MenuItem>
-              {Countries.map((country, index) => (
-                <MenuItem key={index} value={country.value}>
-                  {country.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        <div className="app__stats">
-          <InfoBox
-            onClick={(e) => setCasesType("cases")}
-            title="Cases"
-            isRed
-            active={casesType === "cases"}
-            cases={
-              Country === "worldwide"
-                ? `+ ${numeral(CountryInfo.todayCases).format("0,0")}`
-                : `+ ${numeral(exactData.cases).format("0,0")}`
-            }
-            total={numeral(CountryInfo.cases).format("0,0")}
-          />
-          <InfoBox
-            onClick={(e) => setCasesType("recovered")}
-            title="Recovered"
-            active={casesType === "recovered"}
-            cases={
-              Country === "worldwide"
-                ? `+ ${numeral(CountryInfo.todayRecovered).format("0,0")}`
-                : `+ ${numeral(exactData.recovered).format("0,0")}`
-            }
-            total={numeral(CountryInfo.recovered).format("0,0")}
-          />
-          <InfoBox
-            onClick={(e) => setCasesType("deaths")}
-            title="Deaths"
-            isRed
-            active={casesType === "deaths"}
-            cases={
-              Country === "worldwide"
-                ? `+ ${numeral(CountryInfo.todayDeaths).format("0,0")}`
-                : `+ ${numeral(exactData.deaths).format("0,0")}`
-            }
-            total={numeral(CountryInfo.deaths).format("0,0")}
-          />
-        </div>
-        <h3 className = "table__header">Live cases by country</h3>
-        <Table countries={tableData} />
+      <motion.div
+        variants={containerVariants}
+        initial="initial"
+        animate="animate"
+        className="app__left"
+      >
+        <AnimatedItems>
+          <div className="app__header">
+            <h1>COVID-19 TRACKER</h1>
+            <FormControl className="app__dropdown">
+              <Select
+                variant="outlined"
+                value={Country}
+                onChange={onCountryChange}
+                size="small"
+              >
+                <MenuItem value="worldwide">Worldwide</MenuItem>
+                {Countries.map((country, index) => (
+                  <MenuItem key={index} value={country.value}>
+                    {country.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+        </AnimatedItems>
+        <AnimatedItems>
+          <div className="app__stats">
+            <InfoBox
+              onClick={(e) => setCasesType("cases")}
+              title="Cases"
+              isRed
+              active={casesType === "cases"}
+              cases={
+                Country === "worldwide"
+                  ? `+ ${numeral(CountryInfo.todayCases).format("0,0")}`
+                  : `+ ${numeral(exactData.cases).format("0,0")}`
+              }
+              total={numeral(CountryInfo.cases).format("0,0")}
+            />
+            <InfoBox
+              onClick={(e) => setCasesType("recovered")}
+              title="Recovered"
+              active={casesType === "recovered"}
+              cases={
+                Country === "worldwide"
+                  ? `+ ${numeral(CountryInfo.todayRecovered).format("0,0")}`
+                  : `+ ${numeral(exactData.recovered).format("0,0")}`
+              }
+              total={numeral(CountryInfo.recovered).format("0,0")}
+            />
+            <InfoBox
+              onClick={(e) => setCasesType("deaths")}
+              title="Deaths"
+              isRed
+              active={casesType === "deaths"}
+              cases={
+                Country === "worldwide"
+                  ? `+ ${numeral(CountryInfo.todayDeaths).format("0,0")}`
+                  : `+ ${numeral(exactData.deaths).format("0,0")}`
+              }
+              total={numeral(CountryInfo.deaths).format("0,0")}
+            />
+          </div>
+        </AnimatedItems>
+        <AnimatedItems>
+          <h3 className="table__header">Live cases by country</h3>
+          <Table countries={tableData} />
+        </AnimatedItems>
+        <AnimatedItems>
           <Map
             center={mapCenter}
             zoom={mapZoom}
             countries={mapCountries}
             casesType={casesType}
           />
-      </div>
-      <Card className="app__right">
-        <CardContent>
-          <h3>Worldwide new cases</h3>
-          <CaseGraph casesType={casesType} />
-          <h3>SIR model</h3>
-          <SIR></SIR>
-          <h3>Top countries</h3>
-          <TopCountriesBarGraph countries = {tableData.slice(0,5)}></TopCountriesBarGraph>
-        </CardContent>
-      </Card>
+        </AnimatedItems>
+      </motion.div>
+
+
+      <motion.div
+        variants={containerVariants}
+        initial="initial"
+        animate="animate"
+        className="app__right"
+      >
+        <Card>
+          <CardContent>
+            <h3>Worldwide new cases</h3>
+            <CaseGraph casesType={casesType} />
+            <h3>SIR model</h3>
+            <SIR></SIR>
+            <h3>Top countries</h3>
+            <TopCountriesBarGraph
+              countries={tableData.slice(0, 5)}
+            ></TopCountriesBarGraph>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   );
 }
+
+const AnimatedItems = ({ children }) => (
+  <motion.div variants={itemVariants}>{children}</motion.div>
+);
 
 export default App;

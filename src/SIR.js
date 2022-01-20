@@ -20,6 +20,12 @@ const SIR = () => {
   const firstload = useRef(true);
   const [loading, setLoading] = useState(true);
 
+  function delay(time) {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, time);
+    });
+  }
+
   const solveSIR = async () => {
     const url = `${baseurl}/SIRsolver/solveode`;
     const formdata = new FormData();
@@ -29,6 +35,9 @@ const SIR = () => {
     formdata.append("size", size);
     formdata.append("Beta", Beta);
     formdata.append("Gamma", Gamma);
+
+    // await delay(5000);
+
     const data = await fetch(url, {
       method: "POST",
       body: formdata,
@@ -52,16 +61,16 @@ const SIR = () => {
   useEffect(() => {
     console.log("Parameters chaanged, solving again ... ");
     solveSIR().then(({ S, I, R }) => {
-      firstload.current = false;
       setsolution({
         S: S,
         I: I,
         R: R,
       });
+      if (firstload.current) {
+        setLoading(false);
+      }
+      firstload.current = false;
     });
-    if (firstload) {
-      setLoading(false);
-    }
   }, [S0, R0, I0, Beta, Gamma]);
 
   return (
